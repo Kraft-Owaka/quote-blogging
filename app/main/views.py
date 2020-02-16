@@ -1,24 +1,19 @@
-from flask import render_template
+from flask import Flaskrender_template
 
 app = Flask(__name__)
 
 
-@main.route('/index')
+@main.route('/')
 def index():
-    quote=get_quotes()
-    print('*******data*****')
-    print(quote)
-
-    allposts=Post.query.order_by(Post.date.desc()).all()
-    return render_template('index.html',allposts=allposts,quote=quote)
+    return render_template('index.html')
 
 @main.route('/')
 def post():
     return render_template('post.html')
 
 @main.route('/')
-def index():
-    return render_template('index.html')
+def contact():
+    return render_template('contact.html')
 
 
 @main.route('/')
