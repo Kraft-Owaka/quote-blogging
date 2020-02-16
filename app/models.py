@@ -1,100 +1,57 @@
-from . import db
-from datetime import datetime
-from . import login_manager
-from werkzeug.security import generate_password_hash,check_password_hash
-from datetime import datetime
+from flask import Flask
+from flask_bootstrap import Bootstrap
+from config import config_options
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from  flask_uploads import UploadSet,configure_uploads,IMAGES
+from flask_mail import Mail
+from flask_simplemde import SimpleMDE
+
+login_manager=LoginManager()
+login_manager.session_protection='strong'
+login_manager.login_view='auth.login'
+mail=Mail()
+simple = SimpleMDE()
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+bootstrap = Bootstrap()
+db = SQLAlchemy()
+
+photos=UploadSet('photos',IMAGES)
+
+def create_app(config_name):
+
+    app = Flask(__name__)
+
+    # Creating the app configurations
+    app.config.from_object(config_options[config_name])
+
+    # Initializing flask extensions
+    bootstrap.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
+
+    # registering the blue print
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
+    #setting config
+    from.request import configure_request
+    configure_request(app)
+
+    from.auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint,url_prefix='/auth')
+
+    # configure UploadSet
+    configure_uploads(app,photos)
+
+    #mail
+    mail.init_app(app)
+
+    #simple mde
+    simple.init_app(app)
+
+    return app
 
 
-
-class User(UserMixin,db.Model):
-    __tablename__ = 'users'
-
-    id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255))
-    email=db.Column(db.String(255),unique=True,index=True)
-    role_id=db.Column(db.Integer,db.ForeignKey('roles.id'))
-    bio=db.Column(db.String(255))
-    profile_pic_path=db.Column(db.String())
-    pass_secure=db.Column(db.String(255))
-    post=db.relationship('Post', backref='user', lazy='dynamic')
-    comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
-  
-
-    @property
-    def password(self):
-        raise AttributeError('You cannot read the password attribute')
-
-    @password.setter
-    def password(self, password):
-        self.password_secure = generate_password_hash(password)
-
-
-    def verify_password(self,password):
-        return check_password_hash(self.password_secure,password)
-
-    def __repr__(self):
-        return f'{self.username}'
-        
-
-class Role(db.Model):
-
-    __tablename__='roles'
-
-    id =db.Column(db.Integer,primary_key=True)
-    name=db.Column(db.String(255))
-    user_id=db.Column(db.Integer,db.ForeignKey('users.id'), nullable=False)
-
-    def __repr__(self):
-        return f'User {self.name}'
-
-class Post(db.Model):
-    __tablename__ = 'posts'
-
-    id = db.Column(db.Integer,primary_key = True)
-    owner_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    title=db.Column(db.String(255), nullable=False)
-    subtitle=db.Column(db.String(255),nullable=False)
-    content=db.Column(db.String(255),nullable=False)
-    name=db.Column(db.String(255),nullable=False)
-    date=db.Column(db.DateTime)
-    
-    def __repr__(self):
-        return f'Post: id: {self.id} post: {self.content}'
-
-
-
-class Comment(db.Model):
-    __tablename__ = 'comments'
-
-    id =db.Column(db.Integer,primary_key=True)
-    posts_id=db.Column(db.Integer,db.ForeignKey('posts.id'))
-    user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
-    comment=db.Column(db.Text)
-    comment_date=db.Column(db.DateTime)
-
-    def __repr__(self):
-        return f'Comment: id: {self.id} comment: {self.comment}'
-
-
-
-    @classmethod
-    def get_comments(cls,user_id):
-        commentsretrieved = Comment.query.filter_by(user_id=user_id).all()
-        return commentsretrieved
-
-class Quote:
-    '''
-    Quote class to define Quote Objects
-    '''
-
-    def __init__(self,author,quote,permalink):
-        self.id =id
-        self.author = author
-        self.quote = quote
-        self.permalink = "http://quotes.stormconsultancy.co.uk/quotes/19"
 
