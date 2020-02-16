@@ -1,22 +1,37 @@
 import os
-
 class Config:
-    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://kraft:admin123@localhost/pitches"
-    # SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-    SECRET_KEY=os.environ.get('SECRET_KEY')
-  
-  
+    '''
+    General configuration parent class
+    '''
+
+
+
+
 
 
 class ProdConfig(Config):
+    '''
+    Production  configuration child class
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-    
+    Args:
+        Config: The parent configuration class with General configuration settings
+    '''
+
+
+
+
 class DevConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://kraft:admin123@localhost/pitches"
-    DEBUG = True
+    '''
+    Development  configuration child class
+
+    Args:
+        Config: The parent configuration class with General configuration settings
+    '''
+
+
 
 config_options = {
-    'development':DevConfig,
-    'production':ProdConfig
+'development':DevConfig,
+'production':ProdConfig,
+
 }
