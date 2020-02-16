@@ -1,0 +1,28 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'base.html'%}
+
+
+{% block content %}
+
+
+
+
+
+<body>
+    {% for pitch in pitches %}
+        <li>{{ pitch.content }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+</body>
+
+<style>
+    
+body {
+        font-size: 65px;
+        background-color: blanchedalmond;
+    }
+    
+
+</style>
