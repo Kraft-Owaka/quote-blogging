@@ -1,8 +1,9 @@
-from flask_login import UserMixin
-from . import login_manager
 from . import db
 from datetime import datetime
+from . import login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
+from datetime import datetime
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -10,30 +11,19 @@ def load_user(user_id):
 
 
 
-# class Pickup:
-      
-#     def __init__(self, pickup_id, author, pickupLine):
-        
-#         self.pickup_id = pickup_id
-#         self.author = author
-#         self.pickupLine = pickupLine
-
-
-
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255),index = True)
-    email = db.Column(db.String(255),unique = True,index = True)
-    bio = db.Column(db.String(255))
-    profile_pic_path = db.Column(db.String())
-    password_secure = db.Column(db.String(255))
-    pitch = db.relationship('Pitch', backref = 'author', lazy=True)
+    username = db.Column(db.String(255))
+    email=db.Column(db.String(255),unique=True,index=True)
+    role_id=db.Column(db.Integer,db.ForeignKey('roles.id'))
+    bio=db.Column(db.String(255))
+    profile_pic_path=db.Column(db.String())
+    pass_secure=db.Column(db.String(255))
+    post=db.relationship('Post', backref='user', lazy='dynamic')
     comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
-    upvotes = db.relationship('Upvote', backref = 'user', lazy = 'dynamic')
-    downvotes = db.relationship('Downvote', backref = 'user', lazy = 'dynamic')
-
+  
 
     @property
     def password(self):
