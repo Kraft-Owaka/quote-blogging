@@ -2,6 +2,7 @@
 from flask import render_template,request,redirect,url_for,abort,flash
 from . import main
 from .forms import UpdateProfile
+# from .forms import PitchForm,CommentForm,UpvoteForm,DownvoteForm,UpdateProfile
 from flask_login import login_required,current_user
 from flask.views import View, MethodView
 from ..model import User,Comment,Post
@@ -17,7 +18,7 @@ def login():
 @main.route('/index')
 def index():
     quote=get_quotes()
-    print('*******quotedata*****')
+    print('quotedata')
     print(quote)
 
     allposts=Post.query.order_by(Post.date.desc()).all()
