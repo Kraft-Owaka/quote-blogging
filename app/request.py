@@ -13,7 +13,7 @@ def get_quotes():
 
     get_quotes_url = quote_url
 
-    print('********quoteurl***********')
+    print('quoteurl')
     print(get_quotes_url)
 
     with urllib.request.urlopen(get_quotes_url) as url:
