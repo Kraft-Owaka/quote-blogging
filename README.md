@@ -1,15 +1,19 @@
-# By Owaka Kraft
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# PROJECT DESCRIPTION
+
+This is web application that a users can login and post blogs and see other users blogs, read and comment them.
+
+# By Owaka K
 App name
 First Flask
 
 ### CONTACT INFORMATION
 Email: owakakraft@gmail.com
 
-#### LANGUAGES
+#### LANGUAGES $ FRAMEWORK 
 
 - Python
 - Markdown
-- FRAMEWORK
 - Flask
 - Heroku
 

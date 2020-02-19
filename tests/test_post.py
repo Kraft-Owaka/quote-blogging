@@ -1,6 +1,6 @@
 import unittest
 
-from app.model import Upvote
+from app .model import Upvote
 
 class UpvoteModelTest(unittest.TestCase):
 
