@@ -39,7 +39,7 @@ def login():
         
     title="Blog Login"
 
-    return render_template('index.html',title=title)
+    return render_template('auth/login.html',title=title, login_form = login_form)
 
 @auth.route('/logout')
 @login_required
