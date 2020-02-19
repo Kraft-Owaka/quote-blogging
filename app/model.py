@@ -89,5 +89,5 @@ class Quote:
         self.id =id
         self.author = author
         self.quote = quote
-        self.permalink = "http://quotes.stormconsultancy.co.uk/quotes/19"
+        # self.permalink = "http://quotes.stormconsultancy.co.uk/quotes/19"
 
