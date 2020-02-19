@@ -32,7 +32,7 @@ def about():
 @main.route('/post/<int:post_id>')
 def post(post_id):
     post=Post.query.filter_by(id=post_id).first()
-    date=post.date.strftime('%B %d, %Y')
+    date=post.date.strftime('%B : %d, %Y')
     time=post.date.strftime('%I : %M %p')
 
     return render_template('post.html',post=post,date=date,time=time)

@@ -7,8 +7,6 @@ from .. import db
 from ..email import mail_message
 
 
-
-
 @auth.route('/register',methods=["GET","POST"])
 def register():
     '''
@@ -41,7 +39,7 @@ def login():
         
     title="Blog Login"
 
-    return render_template('auth/login.html',login_form=login_form,title=title)
+    return render_template('index.html',title=title)
 
 @auth.route('/logout')
 @login_required

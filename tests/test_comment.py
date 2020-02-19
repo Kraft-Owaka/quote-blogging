@@ -1,6 +1,6 @@
 import unittest
 
-from app.model import Downvote
+from .model import Downvote
 
 class DownvoteModelTest(unittest.TestCase):
 

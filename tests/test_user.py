@@ -1,4 +1,4 @@
-import unittest
+import unittest # Importing the unittest module
 from app.model import User
 
 class UserModelTest(unittest.TestCase):
